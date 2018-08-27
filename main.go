@@ -9,7 +9,15 @@ import (
 
 func main() {
 	//调用系统函数设置当前进程对高DPi的支持方式,否则系统缩放后会模糊
-	syscall.NewLazyDLL("Shcore.dll").NewProc("SetProcessDpiAwareness").Call(uintptr(2))
+	shcore := syscall.NewLazyDLL("Shcore.dll").NewProc("SetProcessDpiAwareness")
+	err := shcore.Find()
+	if err != nil {
+		//加载dll出错
+		log.Print(err)
+	}else{
+		shcore.Call(uintptr(2))
+	}
+
 	//创建window窗口
 	//参数一表示创建窗口的样式
 	//SW_TITLEBAR 顶层窗口，有标题栏

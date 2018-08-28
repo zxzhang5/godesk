@@ -3,12 +3,19 @@ package notifyicon
 import (
 	"log"
 	"github.com/lxn/walk"
-	"github.com/sciter-sdk/go-sciter/window"
 )
 
 //图盘图标设置程序，结构体NotifyIcon引用需要带包名
-func Config(ni *walk.NotifyIcon ,icon *walk.Icon, win *window.Window) error{
-
+func Config(filename string) (*walk.NotifyIcon, error){
+	icon, err := walk.Resources.Icon(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// 新建托盘图标
+	ni, err := walk.NewNotifyIcon()
+	if err != nil {
+		log.Fatal(err)
+	}
 	// 设置图标icon
 	if err := ni.SetIcon(icon); err != nil {
 		log.Fatal(err)
@@ -22,8 +29,6 @@ func Config(ni *walk.NotifyIcon ,icon *walk.Icon, win *window.Window) error{
 		if button != walk.LeftButton {
 			return
 		}
-		win.Show()
-		win.Run()
 		//err := ni.ShowCustom("鼠标左键点击","鼠标左键点击提示")
 		//if err != nil {
 		//	log.Fatal(err)
@@ -48,5 +53,5 @@ func Config(ni *walk.NotifyIcon ,icon *walk.Icon, win *window.Window) error{
 		log.Fatal(err)
 	}
 
-	return nil
+	return ni, nil
 }

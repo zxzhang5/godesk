@@ -6,7 +6,7 @@ import (
 	"log"
 	"syscall"
 	"godesk/component"
-	"github.com/lxn/walk"
+	//"github.com/lxn/walk"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	err := shcore.Find()
 	if err != nil {
 		//加载dll出错
-		log.Print(err)
+		//log.Print(err)
 	}else{
 		shcore.Call(uintptr(2))
 	}
@@ -38,18 +38,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// 加载托盘图标icon文件
-	icon, err := walk.Resources.Icon("resource/img/icon.ico")
-	if err != nil {
-		log.Fatal(err)
-	}
-	// 新建托盘图标
-	ni, err := walk.NewNotifyIcon()
-	if err != nil {
-		log.Fatal(err)
-	}
 	//设置托盘图标
-	err = notifyicon.Config(ni,icon,w)
+	ni, err := notifyicon.Config("resource/img/icon.ico")
 	if err != nil {
 		log.Fatal(err)
 	}

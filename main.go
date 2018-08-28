@@ -5,6 +5,8 @@ import (
 	"github.com/sciter-sdk/go-sciter/window"
 	"log"
 	"syscall"
+	"godesk/component"
+	"github.com/lxn/walk"
 )
 
 func main() {
@@ -29,9 +31,30 @@ func main() {
 	w, err := window.New(sciter.SW_TITLEBAR|
 		sciter.SW_RESIZEABLE|
 		sciter.SW_CONTROLS|
-		sciter.SW_MAIN|
+		sciter.SW_POPUP|
 		sciter.SW_ENABLE_DEBUG,
 		&sciter.Rect{Left: 500, Top: 300, Right: 1300, Bottom: 900})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 加载托盘图标icon文件
+	icon, err := walk.Resources.Icon("resource/img/icon.ico")
+	if err != nil {
+		log.Fatal(err)
+	}
+	// 新建托盘图标
+	ni, err := walk.NewNotifyIcon()
+	if err != nil {
+		log.Fatal(err)
+	}
+	//设置托盘图标
+	err = notifyicon.Config(ni,icon,w)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// 消息提示
+	err = ni.ShowInfo("运行时初始提示信息", "信息详情")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +62,8 @@ func main() {
 	//加载文件
 	w.LoadFile("resource/view/main.html")
 	//设置标题
-	w.SetTitle("GoDesk")
+	w.SetTitle("GoDesk演示")
+
 	//显示窗口
 	w.Show()
 	//运行窗口，进入消息循环

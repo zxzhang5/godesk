@@ -37,7 +37,7 @@ func main() {
 	}
 
 	//加载文件
-	w.LoadFile("resources/views/main.html")
+	w.LoadFile("resource/view/main.html")
 	//设置标题
 	w.SetTitle("GoDesk")
 	//显示窗口

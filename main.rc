@@ -24,6 +24,6 @@ BEGIN
     END
 END
 
-1 ICON "icon.ico"
+IDI_ICON1 ICON "icon.ico"
 
 1 RT_MANIFEST "main.exe.manifest"

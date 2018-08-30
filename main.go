@@ -24,6 +24,12 @@ func main() {
 		shcore.Call(uintptr(2))
 	}
 
+	screen := syscall.NewLazyDLL("User32.dll").NewProc("GetSystemMetrics")
+	screenWidth, _, _ := screen.Call(uintptr(0))
+	screenHeight, _, _ := screen.Call(uintptr(1))
+	width := float32(screenWidth)
+	height := float32(screenHeight)
+
 	//创建window窗口
 	//参数一表示创建窗口的样式
 	//SW_TITLEBAR 顶层窗口，有标题栏
@@ -32,12 +38,11 @@ func main() {
 	//SW_MAIN 应用程序主窗口，关闭后其他所有窗口也会关闭
 	//SW_ENABLE_DEBUG 可以调试
 	//参数二表示创建窗口的矩形, 参数代表了左上角，右下角的坐标
-	w, err := window.New(sciter.SW_TITLEBAR|
+	w, err := window.New(
 		sciter.SW_RESIZEABLE|
-		sciter.SW_CONTROLS|
-		sciter.SW_POPUP|
+		sciter.SW_ALPHA|
 		sciter.SW_ENABLE_DEBUG,
-		&sciter.Rect{Left: 500, Top: 300, Right: 1300, Bottom: 900})
+		&sciter.Rect{Left: int32(width * 0.1), Top: int32(height * 0.1), Right: int32(width * 0.9), Bottom: int32(height * 0.9)})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -59,8 +64,6 @@ func main() {
 
 	//加载文件
 	w.LoadFile("rice://resource/view/main.html")
-	//设置标题
-	w.SetTitle("GoDesk演示")
 
 	//显示窗口
 	w.Show()

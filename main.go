@@ -5,9 +5,13 @@ import (
 	"github.com/sciter-sdk/go-sciter/window"
 	"log"
 	"syscall"
-	"godesk/component"
-	//"github.com/lxn/walk"
+	"godesk/component/notifyicon"
+	tool "github.com/GeertJohan/go.rice"
+	rice "github.com/sciter-sdk/go-sciter/rice"
 )
+//下面注释不要删除，使用go generate加入程序图标、信息（main.rc）以及打包静态资源
+//go:generate windres -o main-res.syso main.rc
+//go:generate rice embed-go
 
 func main() {
 	//调用系统函数设置当前进程对高DPi的支持方式,否则系统缩放后会模糊
@@ -38,19 +42,23 @@ func main() {
 		log.Fatal(err)
 	}
 
+	rice.HandleDataLoad(w.Sciter)
+	tool.MustFindBox("resource")
+
 	//设置托盘图标
-	ni, err := notifyicon.Config("resource/img/icon.ico")
+	ni, err := notifyicon.New("icon.ico")
 	if err != nil {
 		log.Fatal(err)
 	}
 	// 消息提示
-	err = ni.ShowInfo("运行时初始提示信息", "信息详情")
-	if err != nil {
-		log.Fatal(err)
-	}
+	//err = ni.ShowInfo("运行时初始提示信息", "信息详情")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	log.Print(ni)
 
 	//加载文件
-	w.LoadFile("resource/view/main.html")
+	w.LoadFile("rice://resource/view/main.html")
 	//设置标题
 	w.SetTitle("GoDesk演示")
 

@@ -6,7 +6,7 @@ import (
 )
 
 //图盘图标设置程序，结构体NotifyIcon引用需要带包名
-func Config(filename string) (*walk.NotifyIcon, error){
+func New(filename string) (*walk.NotifyIcon, error){
 	icon, err := walk.Resources.Icon(filename)
 	if err != nil {
 		log.Fatal(err)

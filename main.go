@@ -9,7 +9,6 @@ import (
 	tool "github.com/GeertJohan/go.rice"
 	"github.com/sciter-sdk/go-sciter/rice"
 	"github.com/lxn/win"
-	"godesk/component/message"
 )
 //下面注释不要删除，使用go generate加入程序图标、信息（main.rc）以及打包静态资源
 //go:generate windres -o main-res.syso main.rc
@@ -58,7 +57,6 @@ func main() {
 	//}
 	log.Print(ni)
 
-	if(message.Confirm("选择","是否运行程序")){
 		//加载文件
 		w.LoadFile("rice://resource/view/main.html")
 
@@ -66,5 +64,4 @@ func main() {
 		w.Show()
 		//运行窗口，进入消息循环
 		w.Run()
-	}
 }

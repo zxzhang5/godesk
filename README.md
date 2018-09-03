@@ -13,6 +13,8 @@ go get -x github.com/GeertJohan/go.rice/rice
 go get -x github.com/lxn/win
 go get -x github.com/lxn/walk
 go get -x github.com/sciter-sdk/go-sciter
+go get -x github.com/mattn/go-sqlite3
+go get -x github.com/imroc/req
 ```
 # 编译
 

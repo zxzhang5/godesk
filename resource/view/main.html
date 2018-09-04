@@ -2,8 +2,502 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <style>
+        html {
+            line-height: 1.15;
+            margin: 0;
+            padding:0;
+            background-color:transparent;
+        }
+        body {
+            font-family: "Microsoft YaHei",Arial, Verdana, Tahoma;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.429;
+            color: rgba(0, 0, 0, 0.87);
+            background-color: #FFF;
+            margin: 1px 5px 5px 5px;
+            padding:0;
+            border:1px solid #d6d8dd;
+            box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.05),5px 0 5px 0 rgba(0, 0, 0, 0.05),-5px 0 5px 0 rgba(0, 0, 0, 0.05);
+        }
+        h1, h2, h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        h4, h5, h6 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin: 0 0 10px;
+        }
+        ul,
+        ol {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.12);
+            box-sizing: content-box;
+            overflow: visible;
+        }
+        a {
+            color: #2196F3;
+            text-decoration: none;
+            background-color: transparent;
+        }
+        a:hover, a:focus {
+            text-decoration: underline;
+        }
+        a:focus {
+            outline: thin dotted;
+            outline-offset: -2px;
+        }
+        b,strong {
+            font-weight: bolder;
+        }
+        small {
+            font-size: 80%;
+        }
+        sub,sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        sub {
+            bottom: -0.25em;
+        }
+        sup {
+            top: -0.5em;
+        }
+        img {
+            border-style: none;
+        }
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 100%;
+            line-height: 1.15;
+            margin: 0;
+        }
+        button,
+        input {
+            overflow: visible;
+        }
+        button,
+        select {
+            text-transform: none;
+        }
+        button,
+        [type="button"],
+        [type="reset"],
+        [type="submit"] {
+            -webkit-appearance: button;
+        }
+        fieldset {
+            padding: 0.35em 0.75em 0.625em;
+        }
+        legend {
+            box-sizing: border-box;
+            color: inherit;
+            display: table;
+            max-width: 100%;
+            padding: 0;
+            white-space: normal;
+        }
+        textarea {
+            overflow: auto;
+        }
+        [type="checkbox"],
+        [type="radio"] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+        [type="search"] {
+            -webkit-appearance: textfield;
+            outline-offset: -2px;
+        }
+        [hidden] {
+            display: none;
+        }
+        .appbar {
+            background-color: #eef0f6;
+            color: #FFF;
+            height: 72px;
+            min-height: 72px;
+            line-height: 72px;
+            border-bottom: 1px solid #d6d8dd;
+        }
+        .container{
+            width:100%;
+        }
+        .sidebar{
+            position: fixed;
+            background-color: #f9fafb;
+            width:180px;
+            height:100%;
+            border-right: 1px solid #d6d8dd;
+        }
+        .main{
+            margin-left: 180px;
+            height:100%;
+        }
+        .btn {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 18px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.87);
+            background-color: #FFF;
+            -webkit-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+            display: inline-block;
+            height: 36px;
+            padding: 0 26px;
+            margin: 6px 0;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            background-image: none;
+            text-align: center;
+            line-height: 36px;
+            vertical-align: middle;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-size: 14px;
+            font-family: inherit;
+            letter-spacing: 0.03em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover, .btn:focus, .btn:active {
+            color: rgba(0, 0, 0, 0.87);
+            background-color: white;
+        }
+
+        .btn[disabled]:hover, .btn[disabled]:focus, .btn[disabled]:active {
+            color: rgba(0, 0, 0, 0.87);
+            background-color: #FFF;
+        }
+
+        .btn.btn-flat {
+            color: rgba(0, 0, 0, 0.87);
+            background-color: transparent;
+        }
+
+        .btn.btn-flat:hover, .btn.btn-flat:focus, .btn.btn-flat:active {
+            color: rgba(0, 0, 0, 0.87);
+            background-color: #f2f2f2;
+        }
+
+        .btn.btn-flat[disabled]:hover, .btn.btn-flat[disabled]:focus, .btn.btn-flat[disabled]:active {
+            color: rgba(0, 0, 0, 0.87);
+            background-color: transparent;
+        }
+
+        .btn:hover, .btn:focus, .btn:active {
+            outline: 0;
+            text-decoration: none;
+            color: rgba(0, 0, 0, 0.87);
+        }
+
+        .btn:hover, .btn:focus {
+            -webkit-box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active:hover {
+            -webkit-box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled, .btn.-is-disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.60;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .btn + .btn {
+            margin-left: 8px;
+        }
+
+        .btn-flat {
+            background-color: transparent;
+        }
+
+        .btn-flat:hover, .btn-flat:focus, .btn-flat:active, .btn-flat:active:hover {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            background-color: #f2f2f2;
+        }
+
+        .btn-raised, .btn-fab {
+            -webkit-box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0px 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-raised:active, .btn-fab:active {
+            -webkit-box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0px 4px rgba(0, 0, 0, 0.12), 1px 3px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-fab {
+            position: relative;
+            padding: 0;
+            width: 55px;
+            height: 55px;
+            line-height: 55px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            color: #FFF;
+            background-color: #2196F3;
+        }
+
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+            color: #FFF;
+            background-color: #39a1f4;
+        }
+
+        .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled]:active {
+            color: #FFF;
+            background-color: #2196F3;
+        }
+
+        .btn-primary.btn-flat {
+            color: #2196F3;
+            background-color: transparent;
+        }
+
+        .btn-primary.btn-flat:hover, .btn-primary.btn-flat:focus, .btn-primary.btn-flat:active {
+            color: #2196F3;
+            background-color: #f2f2f2;
+        }
+
+        .btn-primary.btn-flat[disabled]:hover, .btn-primary.btn-flat[disabled]:focus, .btn-primary.btn-flat[disabled]:active {
+            color: #2196F3;
+            background-color: transparent;
+        }
+
+        .btn-dark {
+            color: #FFF;
+            background-color: #424242;
+        }
+
+        .btn-dark:hover, .btn-dark:focus, .btn-dark:active {
+            color: #FFF;
+            background-color: #4f4f4f;
+        }
+
+        .btn-dark[disabled]:hover, .btn-dark[disabled]:focus, .btn-dark[disabled]:active {
+            color: #FFF;
+            background-color: #424242;
+        }
+
+        .btn-dark.btn-flat {
+            color: #424242;
+            background-color: transparent;
+        }
+
+        .btn-dark.btn-flat:hover, .btn-dark.btn-flat:focus, .btn-dark.btn-flat:active {
+            color: #424242;
+            background-color: #f2f2f2;
+        }
+
+        .btn-dark.btn-flat[disabled]:hover, .btn-dark.btn-flat[disabled]:focus, .btn-dark.btn-flat[disabled]:active {
+            color: #424242;
+            background-color: transparent;
+        }
+
+        .btn-danger {
+            color: #FFF;
+            background-color: #F44336;
+        }
+
+        .btn-danger:hover, .btn-danger:focus, .btn-danger:active {
+            color: #FFF;
+            background-color: #f55a4e;
+        }
+
+        .btn-danger[disabled]:hover, .btn-danger[disabled]:focus, .btn-danger[disabled]:active {
+            color: #FFF;
+            background-color: #F44336;
+        }
+
+        .btn-danger.btn-flat {
+            color: #F44336;
+            background-color: transparent;
+        }
+
+        .btn-danger.btn-flat:hover, .btn-danger.btn-flat:focus, .btn-danger.btn-flat:active {
+            color: #F44336;
+            background-color: #f2f2f2;
+        }
+
+        .btn-danger.btn-flat[disabled]:hover, .btn-danger.btn-flat[disabled]:focus, .btn-danger.btn-flat[disabled]:active {
+            color: #F44336;
+            background-color: transparent;
+        }
+
+        .btn-accent {
+            color: #FFF;
+            background-color: #FF4081;
+        }
+
+        .btn-accent:hover, .btn-accent:focus, .btn-accent:active {
+            color: #FFF;
+            background-color: #ff5a92;
+        }
+
+        .btn-accent[disabled]:hover, .btn-accent[disabled]:focus, .btn-accent[disabled]:active {
+            color: #FFF;
+            background-color: #FF4081;
+        }
+
+        .btn-accent.btn-flat {
+            color: #FF4081;
+            background-color: transparent;
+        }
+
+        .btn-accent.btn-flat:hover, .btn-accent.btn-flat:focus, .btn-accent.btn-flat:active {
+            color: #FF4081;
+            background-color: #f2f2f2;
+        }
+
+        .btn-accent.btn-flat[disabled]:hover, .btn-accent.btn-flat[disabled]:focus, .btn-accent.btn-flat[disabled]:active {
+            color: #FF4081;
+            background-color: transparent;
+        }
+
+        .btn-small {
+            height: 30.6px;
+            line-height: 30.6px;
+            padding: 0 16px;
+            font-size: 13px;
+        }
+
+        .btn-large {
+            height: 54px;
+            line-height: 54px;
+            padding: 0 26px;
+            font-size: 14px;
+        }
+
+        .btn-fab.btn-small {
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+        }
+
+        .btn-fab.btn-large {
+            width: 75px;
+            height: 75px;
+            line-height: 75px;
+        }
+        .panel {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0;
+            background-color: #FFF;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+        }
+        .panel:before, .panel:after {
+            content: " ";
+            display: table;
+        }
+        .panel:after {
+            clear: both;
+        }
+        .tabs-bar {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+            background-color: transparent;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+        .tabs-bar > li {
+            display: inline-block;
+        }
+        .tabs-bar > li > a {
+            display: block;
+            white-space: nowrap;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.87);
+            cursor: default;
+            height: 48px;
+            line-height: 48px;
+            padding-left: 24px;
+            padding-right: 24px;
+            user-select: none;
+        }
+        .tabs-bar > li > a:hover {
+            color: #40a9ff;
+            text-decoration: none;
+        }
+        .tabs-bar > li.active {
+            border-bottom: 2px solid #2196F3;
+        }
+        .tabs-bar > li.active > a {
+            color: #2196F3;
+        }
+        .tabs-bar.tabs-bar-justified {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        .tabs-bar.tabs-bar-justified > li {
+            display: table-cell;
+        }
+        .tabs-bar.tabs-bar-justified > li > a {
+            text-align: center;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        .tabs-pane {
+            display: none;
+        }
+        .tabs-pane.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-<h1>你好！aaaaa</h1>
+    <div class="appbar">
+        <ul class="tabs-bar">
+            <li class="active"><a >Tab-1</a></li>
+            <li><a >Tab-2</a></li>
+            <li><a >Tab-3</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            sidebar
+        </div>
+        <div class="main">
+main
+        </div>
+    </div>
 </body>
 </html>

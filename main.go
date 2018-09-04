@@ -34,7 +34,7 @@ func main() {
 	//SW_ENABLE_DEBUG 可以调试
 	//参数二表示创建窗口的矩形, 参数代表了左上角，右下角的坐标
 	w, err := window.New(
-		sciter.SW_RESIZEABLE|
+		//sciter.SW_RESIZEABLE|
 		sciter.SW_ALPHA|
 		sciter.SW_ENABLE_DEBUG,
 		&sciter.Rect{Left: int32(screenWidth * 0.1), Top: int32(screenHeight * 0.1), Right: int32(screenWidth * 0.9), Bottom: int32(screenHeight * 0.9)})
@@ -56,6 +56,15 @@ func main() {
 	//	log.Fatal(err)
 	//}
 	log.Print(ni)
+
+	//cmd := exec.Command("tasklist")
+	//out, err := cmd.CombinedOutput()
+	//log.Print(string(out))
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+
+
 
 		//加载文件
 		w.LoadFile("rice://resource/view/main.html")

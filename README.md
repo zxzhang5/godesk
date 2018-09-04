@@ -8,13 +8,14 @@
 
 - cmd进入gopath目录src下运行：
 ```
-go get -x github.com/GeertJohan/go.rice
-go get -x github.com/GeertJohan/go.rice/rice
-go get -x github.com/lxn/win
-go get -x github.com/lxn/walk
-go get -x github.com/sciter-sdk/go-sciter
-go get -x github.com/mattn/go-sqlite3
-go get -x github.com/imroc/req
+go get github.com/GeertJohan/go.rice
+go get github.com/GeertJohan/go.rice/rice
+go get github.com/lxn/win
+go get github.com/lxn/walk
+go get github.com/sciter-sdk/go-sciter
+go get github.com/mattn/go-sqlite3
+go get github.com/imroc/req
+go get github.com/braintree/manners
 ```
 # 编译
 

@@ -64,11 +64,22 @@ func main() {
 	//	log.Fatal(err)
 	//}
 
-
-
 		//加载文件
 		w.LoadFile("rice://resource/view/main.html")
 
+	//获取根元素
+	//root, _ := w.GetRootElement()
+	//元素加载资源
+	//img, _ := root.SelectById("logoImg");
+	//img.AttachEventHandler(&sciter.EventHandler{
+	//	//OnDataArrived 当资源被加载但未使用时调用
+	//	OnDataArrived: func(he *sciter.Element, params *sciter.DataArrivedParams) bool {
+	//		//设置属性，给img标签设置src
+	//		he.SetAttr("src", params.Uri());
+	//		return false;
+	//	},
+	//});
+	//img.Load("http://mat1.gtimg.com/www/images/qq2012/qqLogoFilter.png", sciter.RT_DATA_IMAGE);
 		//显示窗口
 		w.Show()
 		//运行窗口，进入消息循环

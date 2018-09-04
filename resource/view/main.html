@@ -129,6 +129,12 @@
         [hidden] {
             display: none;
         }
+        .fl{
+            float:left;
+        }
+        .fr{
+            float:right;
+        }
         .appbar {
             background-color: #eef0f6;
             color: #FFF;
@@ -481,11 +487,34 @@
         .tabs-pane.active {
             display: block;
         }
+        .logo{
+            width:180px;
+            height:72px;
+            float:left;
+        }
+        .logo img{
+            display:inline-block;
+            margin:16px 0 16px 16px;
+            width:40px;
+            height:40px;
+        }
+        .logo div{
+            display:inline-block;
+            color:#3d3939;
+            font-family:"SimHei";
+            font-size:25px;
+            line-height:20px;
+            height:30px;
+        }
     </style>
 </head>
 <body>
     <div class="appbar">
-        <ul class="tabs-bar">
+        <div class="logo">
+            <img id="logoImg" src=“data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAYAAABIdFAMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHhJREFUeNo8zjsOxCAMBFB/KEAUFFR0Cbng3nQPw68ArZdAlOZppPFIBhH5EAB8b+Tlt9MYQ6i1BuqFaq1CKSVcxZ2Acs6406KUgpt5/LCKuVgz5BDCSb13ZO99ZOdcZGvt4mJjzMVKqcha68iIePB86GAiOv8CDADlIUQBs7MD3wAAAABJRU5ErkJggg%3D%3D”/>
+            <div>百度网盘</div>
+        </div>
+        <ul class="tabs-bar fl" style="margin-left:20px">
             <li class="active"><a >Tab-1</a></li>
             <li><a >Tab-2</a></li>
             <li><a >Tab-3</a></li>

@@ -6,17 +6,26 @@
 
 - 下载安装zip：http://gnuwin32.sourceforge.net/packages/zip.htm，安装后将GnuWin32\bin加入到环境变量Path中
 
-- cmd进入gopath目录src下运行：
+- 下载安装包管理工具dep：https://github.com/golang/dep/releases，下载最新的dep-windows-amd64.exe，将其放入GOPATH/bin下，修改名称为dep
+
+# 安装依赖包
+
+- 切换到工程目录下：cd %GOPATH%/src/github.com/zxzhang5/godesk
+
+- 运行：
 ```
-go get github.com/GeertJohan/go.rice
-go get github.com/GeertJohan/go.rice/rice
-go get github.com/lxn/win
-go get github.com/lxn/walk
-go get github.com/sciter-sdk/go-sciter
-go get github.com/mattn/go-sqlite3
-go get github.com/imroc/req
-go get github.com/braintree/manners
+dep init
 ```
+
+# 依赖包说明
+- 静态资源嵌入exe：[go.rice](https://github.com/GeertJohan/go.rice)
+- windows API封装：[lxn/win](https://github.com/lxn/win)
+- windows GUI：[lxn/walk](https://github.com/lxn/walk)
+- sciter的golang实现：[go-sciter](https://github.com/sciter-sdk/go-sciter)
+- 优雅的http服务关闭：[manners](https://github.com/braintree/manners)
+- 人性化HTTP请求库：[req](https://github.com/imroc/req)
+- sqlite操作库：[go-sqlite3](https://github.com/mattn/go-sqlite3)
+
 # 编译
 
 go generate && go build -i -ldflags="-H windowsgui -w" -o dist/godesk.exe

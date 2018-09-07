@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"github.com/braintree/manners"
 	tool "github.com/GeertJohan/go.rice"
+	"godesk/component/config"
 )
 
 //下面注释不要删除，使用go generate加入程序图标、信息（main.rc）以及打包静态资源
@@ -193,8 +194,13 @@ func (mw *MyWindow) msgbox(title, message string, style walk.MsgBoxStyle) {
 }
 
 func main() {
+	cfg := config.Load()
+	config.Set(cfg,"bbb","111")
+	config.Set(cfg,"aaa","呵呵")
+	config.Save(cfg)
+	text  := config.Get("aaa")
+	log.Print(text)
 	mw := NewMyWindow()
-
 	mw.init()
 	mw.AddNotifyIcon()
 	mw.Run()

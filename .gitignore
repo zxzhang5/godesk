@@ -1,4 +1,3 @@
 /dist/*.exe
 /rice-box.go
-/Gopkg.lock
 /vendor

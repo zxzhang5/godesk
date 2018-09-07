@@ -27,10 +27,24 @@ func Error(title string, text string){
 	Show(title, text, win.MB_OK|win.MB_ICONERROR)
 }
 
+//检查错误，如果出错则提示并退出
+func CheckError(err error, title string, text string){
+	if err != nil {
+		Error(title, text)
+	}
+}
+
 //错误提示并退出
 func Fatal(title string, text string){
 	Show(title, text, win.MB_OK|win.MB_ICONERROR)
 	walk.App().Exit(0)
+}
+
+//检查错误，如果出错则提示并退出
+func CheckFatal(err error, title string, text string){
+	if err != nil {
+		Fatal(title, text)
+	}
 }
 
 //询问对话框，返回值true是，false否

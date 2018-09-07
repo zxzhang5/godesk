@@ -12,9 +12,21 @@
 
 - 切换到工程目录下：cd %GOPATH%/src/github.com/zxzhang5/godesk
 
-- 运行：
+- 初始化：
 ```
 dep init
+```
+- 安装依赖(类似npm install)
+```
+dep ensure
+```
+- 更新依赖(类似npm update)
+```
+dep ensure -update
+```
+- 安装新的依赖包(类似npm install --save)
+```
+dep ensure -add github.com/go-ini/ini
 ```
 
 # 依赖包说明
@@ -25,6 +37,7 @@ dep init
 - 优雅的http服务关闭：[manners](https://github.com/braintree/manners)
 - 人性化HTTP请求库：[req](https://github.com/imroc/req)
 - sqlite操作库：[go-sqlite3](https://github.com/mattn/go-sqlite3)
+- ini配置文件解析：[go-ini](https://github.com/go-ini/ini) [中文文档](https://ini.unknwon.io/)
 
 # 编译
 

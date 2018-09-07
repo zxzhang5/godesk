@@ -1,3 +1,4 @@
 /dist/*.exe
 /rice-box.go
-/vendor
+/vendor/github.com
+/vendor/gopkg.in

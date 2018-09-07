@@ -38,6 +38,14 @@ dep ensure -add github.com/go-ini/ini
 - 人性化HTTP请求库：[req](https://github.com/imroc/req)
 - sqlite操作库：[go-sqlite3](https://github.com/mattn/go-sqlite3)
 - ini配置文件解析：[go-ini](https://github.com/go-ini/ini) [中文文档](https://ini.unknwon.io/)
+- 国际化及文本处理：[golang.org/x/text](https://github.com/golang/text) [中文说明](https://www.colabug.com/3411106.html)
+
+# 不翻墙安装golang.org/x/依赖包
+例如
+```
+git clone https://github.com/golang/text.git 
+```
+将text文件夹放入vendor/golang.org/x目录下
 
 # 编译
 

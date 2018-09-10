@@ -1,10 +1,5 @@
 package main
 
-//下面注释不要删除，使用go generate加入程序图标、信息（main.rc）以及打包静态资源、本地化文件
-//go:generate windres -o main-res.syso main.rc
-//go:generate rice embed-go
-//go:generate gotext -srclang=zh update -out=catalog.go -lang=zh,en
-
 import (
 	"github.com/lxn/walk"
 	"log"
@@ -13,7 +8,13 @@ import (
 	tool "github.com/GeertJohan/go.rice"
 	"godesk/component/config"
 	"golang.org/x/text/message"
+	"fmt"
 )
+
+//下面注释不要删除，使用go generate加入程序图标、信息（main.rc）以及打包静态资源、本地化文件
+//go:generate windres -o main-res.syso main.rc
+//go:generate rice embed-go
+//go:generate gotext -srclang=zh update -out=catalog.go -lang=zh,en
 
 //func main() {
 //
@@ -196,15 +197,20 @@ func (mw *MyWindow) msgbox(title, message string, style walk.MsgBoxStyle) {
 }
 
 func main() {
+	//pkgInfo := x.iprog.Package("golang.org/x/text/message")
+	//if pkgInfo == nil {
+	//	log.Print("golang.org/x/text/message is not imported")
+	//}
 	//cfg := config.Load()
 	//config.Set(cfg,"bbb","111")
 	//config.Set(cfg,"aaa","呵呵")
 	//config.Save(cfg)
 	lang  := config.Get("ui.lang")
+	fmt.Print(lang)
 	tag := message.MatchLanguage(lang)
 	p := message.NewPrinter(tag)
-	p.Sprint("Hello %s!\n", "howdy")
-
+	msg:=p.Sprintln("Hello %s!\n", "howdy")
+log.Print(msg)
 	mw := NewMyWindow()
 	mw.init()
 	mw.AddNotifyIcon()

@@ -6,9 +6,10 @@ import (
 	"net/http"
 	"github.com/braintree/manners"
 	tool "github.com/GeertJohan/go.rice"
-	"godesk/component/config"
+	"godesk/component/tomlconfig"
 	"golang.org/x/text/message"
 	"fmt"
+	"github.com/kataras/iris"
 )
 
 //下面注释不要删除，使用go generate加入程序图标、信息（main.rc）以及打包静态资源、本地化文件
@@ -197,15 +198,23 @@ func (mw *MyWindow) msgbox(title, message string, style walk.MsgBoxStyle) {
 }
 
 func main() {
+	app := iris.New()
+	app.RegisterView(iris.HTML("./views", ".html"))
+
+	app.Get("/", func(ctx iris.Context) {
+		ctx.ViewData("message", "Hello world!")
+		ctx.View("main.html")
+	})
+	app.Run(iris.Addr(":8080"), iris.WithConfiguration(iris.TOML("iniconfig/iris.tml")))
 	//pkgInfo := x.iprog.Package("golang.org/x/text/message")
 	//if pkgInfo == nil {
 	//	log.Print("golang.org/x/text/message is not imported")
 	//}
-	//cfg := config.Load()
-	//config.Set(cfg,"bbb","111")
-	//config.Set(cfg,"aaa","呵呵")
-	//config.Save(cfg)
-	lang  := config.Get("ui.lang")
+	//cfg := iniconfig.Load()
+	//iniconfig.Set(cfg,"bbb","111")
+	//iniconfig.Set(cfg,"aaa","呵呵")
+	//iniconfig.Save(cfg)
+	lang  := iniconfig.Get("ui.lang")
 	fmt.Print(lang)
 	tag := message.MatchLanguage(lang)
 	p := message.NewPrinter(tag)

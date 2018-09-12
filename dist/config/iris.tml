@@ -1,0 +1,19 @@
+DisableStartupLog = false
+DisablePathCorrection = false
+DisableBodyConsumptionOnUnmarshal = false
+DisableAutoFireStatusCode = false
+DisableVersionChecker = false
+
+EnablePathEscape = false
+EnableOptimizations = false
+FireMethodNotAllowed = true
+
+TimeFormat = "Mon, 01 Jan 2006 15:04:05 GMT"
+Charset = "UTF-8"
+# POST最大内存
+PostMaxMemory = 33554432
+
+[RemoteAddrHeaders]
+
+[Other]
+MyServerName = "iris"

@@ -1,4 +1,4 @@
-package config
+package tomlconfig
 
 import (
 	"github.com/go-ini/ini"
@@ -8,14 +8,15 @@ import (
 
 //加载配置文件
 func Load() *ini.File {
-	cfg, err := ini.Load("config.ini")
+	cfg, err := ini.Load("config/config.ini")
 	message.CheckFatal(err, "错误","读取配置文件config.ini出错")
+
 	return cfg
 }
 
 //保存配置文件
 func Save(cfg *ini.File)  {
-	err := cfg.SaveTo("config.ini")
+	err := cfg.SaveTo("config/config.ini")
 	message.CheckError(err, "错误","保存配置文件config.ini出错")
 }
 

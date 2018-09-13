@@ -28,10 +28,12 @@ func Error(title string, text string){
 }
 
 //检查错误，如果出错则提示并退出
-func CheckError(err error, title string, text string){
+func CheckError(err error, title string, text string) bool{
 	if err != nil {
 		Error(title, text)
+		return false
 	}
+	return true
 }
 
 //错误提示并退出

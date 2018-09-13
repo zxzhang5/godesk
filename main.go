@@ -4,12 +4,13 @@ import (
 	"github.com/lxn/walk"
 	"log"
 	"net/http"
-	"github.com/braintree/manners"
 	tool "github.com/GeertJohan/go.rice"
-	"godesk/component/tomlconfig"
-	"golang.org/x/text/message"
-	"fmt"
 	"github.com/kataras/iris"
+	"godesk/component/tomlconfig"
+	"godesk/component/message"
+	stdContext "context"
+	"os/exec"
+	"runtime"
 )
 
 //下面注释不要删除，使用go generate加入程序图标、信息（main.rc）以及打包静态资源、本地化文件
@@ -92,28 +93,54 @@ import (
 //		w.Run()
 //}
 
-type MyWindow struct {
+type MainWindow struct {
 	*walk.MainWindow
 	ni *walk.NotifyIcon
 }
 
-func NewMyWindow() *MyWindow {
-	mw := new(MyWindow)
+var app *iris.Application
+
+func OpenUrl(url string) error {
+	var cmd *exec.Cmd
+	switch runtime.GOOS{
+	case "windows":
+		cmd = exec.Command("cmd","/c","start", url)
+	case "darwin":
+		cmd = exec.Command("open", url)
+	case "linux":
+		cmd = exec.Command("xdg-open", url)
+	default:
+		message.Fatal("错误","未知的操作系统:"+runtime.GOOS)
+	}
+	return cmd.Start()
+}
+
+func NewMainWindow() *MainWindow {
+	mw := new(MainWindow)
 	var err error
 	mw.MainWindow, err = walk.NewMainWindow()
 	checkError(err)
 	return mw
 }
 
-func (mw *MyWindow) init() {
+func (mw *MainWindow) init() {
 	http.Handle("/", http.FileServer(tool.MustFindBox("resource").HTTPBox()))
 }
 
-func (mw *MyWindow) RunHttpServer() error {
-	return manners.ListenAndServe(":8080", http.DefaultServeMux)
+func (mw *MainWindow) RunHttpServer() error {
+	config := tomlconfig.Load()
+	app = iris.New()
+	app.RegisterView(iris.HTML("./views", ".html"))
+
+	app.Get("/", func(ctx iris.Context) {
+		ctx.ViewData("message", "Hello world!")
+		ctx.View("main.html")
+	})
+	OpenUrl("http://" + config.Server.Addr)
+	return app.Run(iris.Addr(config.Server.Addr), iris.WithConfiguration(iris.TOML("config/iris.tml")))
 }
 
-func (mw *MyWindow) AddNotifyIcon() {
+func (mw *MainWindow) AddNotifyIcon() {
 	var err error
 	mw.ni, err = walk.NewNotifyIcon()
 	checkError(err)
@@ -129,28 +156,24 @@ func (mw *MyWindow) AddNotifyIcon() {
 	stopAction.SetEnabled(false)
 	startAction.Triggered().Attach(func() {
 		go func() {
-			err := mw.RunHttpServer()
-			if err != nil {
-				mw.msgbox("start", "start http server failed.", walk.MsgBoxIconError)
-				return
-			}
+			mw.RunHttpServer()
 		}()
 		startAction.SetChecked(true)
 		startAction.SetEnabled(false)
 		stopAction.SetEnabled(true)
-		mw.msgbox("start", "start http server success.", walk.MsgBoxIconInformation)
 	})
 
 	stopAction.Triggered().Attach(func() {
-		ok := manners.Close()
-		if !ok {
-			mw.msgbox("stop", "stop http server failed.", walk.MsgBoxIconError)
-		} else {
-			stopAction.SetEnabled(false)
-			startAction.SetChecked(false)
-			startAction.SetEnabled(true)
-			mw.msgbox("stop", "stop http server success.", walk.MsgBoxIconInformation)
-		}
+		go func() {
+				ctx := stdContext.Background()
+				err := app.Shutdown(ctx)
+				ok := message.CheckError(err, "错误","http服务停止失败")
+				if ok {
+					stopAction.SetEnabled(false)
+					startAction.SetChecked(false)
+					startAction.SetEnabled(true)
+				}
+		}()
 	})
 
 	helpMenu := mw.addMenu("help")
@@ -170,7 +193,7 @@ func (mw *MyWindow) AddNotifyIcon() {
 
 }
 
-func (mw *MyWindow) addMenu(name string) *walk.Menu {
+func (mw *MainWindow) addMenu(name string) *walk.Menu {
 	helpMenu, err := walk.NewMenu()
 	checkError(err)
 	help, err := mw.ni.ContextMenu().Actions().AddMenu(helpMenu)
@@ -180,7 +203,7 @@ func (mw *MyWindow) addMenu(name string) *walk.Menu {
 	return helpMenu
 }
 
-func (mw *MyWindow) addAction(menu *walk.Menu, name string) *walk.Action {
+func (mw *MainWindow) addAction(menu *walk.Menu, name string) *walk.Action {
 	action := walk.NewAction()
 	action.SetText(name)
 	if menu != nil {
@@ -192,35 +215,13 @@ func (mw *MyWindow) addAction(menu *walk.Menu, name string) *walk.Action {
 	return action
 }
 
-func (mw *MyWindow) msgbox(title, message string, style walk.MsgBoxStyle) {
+func (mw *MainWindow) msgbox(title, message string, style walk.MsgBoxStyle) {
 	mw.ni.ShowInfo(title, message)
 	walk.MsgBox(mw, title, message, style)
 }
 
 func main() {
-	app := iris.New()
-	app.RegisterView(iris.HTML("./views", ".html"))
-
-	app.Get("/", func(ctx iris.Context) {
-		ctx.ViewData("message", "Hello world!")
-		ctx.View("main.html")
-	})
-	app.Run(iris.Addr(":8080"), iris.WithConfiguration(iris.TOML("iniconfig/iris.tml")))
-	//pkgInfo := x.iprog.Package("golang.org/x/text/message")
-	//if pkgInfo == nil {
-	//	log.Print("golang.org/x/text/message is not imported")
-	//}
-	//cfg := iniconfig.Load()
-	//iniconfig.Set(cfg,"bbb","111")
-	//iniconfig.Set(cfg,"aaa","呵呵")
-	//iniconfig.Save(cfg)
-	lang  := iniconfig.Get("ui.lang")
-	fmt.Print(lang)
-	tag := message.MatchLanguage(lang)
-	p := message.NewPrinter(tag)
-	msg:=p.Sprintln("Hello %s!\n", "howdy")
-log.Print(msg)
-	mw := NewMyWindow()
+	mw := NewMainWindow()
 	mw.init()
 	mw.AddNotifyIcon()
 	mw.Run()
